@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.school.restfulwebservice.book.Book;
 
@@ -17,6 +18,7 @@ import jakarta.validation.constraints.Size;
 
 
 @Entity
+@JsonFilter("StudentFilter")
 public class Student {
 	
 	@Id
@@ -48,8 +50,6 @@ public class Student {
 		this.dateOfBirth = dateOfBirth;
 		this.books = books;
 	}
-
-
 
 	public UUID getId() {
 		return id;
