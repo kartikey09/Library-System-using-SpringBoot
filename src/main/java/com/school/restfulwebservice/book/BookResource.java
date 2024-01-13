@@ -31,13 +31,6 @@ public class BookResource {
 	
 	private BookService bookService;
 	
-	private <T> MappingJacksonValue genericfilter(T bean, SimpleBeanPropertyFilter filter) {
-		MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(bean);
-		FilterProvider filters = new SimpleFilterProvider().addFilter("filterByValue", filter);
-		mappingJacksonValue.setFilters(filters);
-		return mappingJacksonValue;
-	}
-	
 	@Autowired
 	public BookResource(BookJpaRepository bookJpaRepository, BookService bookService) {
 		this.bookJpaRepository = bookJpaRepository;
@@ -52,6 +45,7 @@ public class BookResource {
 	
 	@GetMapping(path = "/books")
 	public List<Book> retrieveAllbooks(){
+		System.out.println("here");
 		return bookJpaRepository.findAll();
 	}
 	
@@ -86,17 +80,11 @@ public class BookResource {
 		return bookService.getBookStatsAsMap();
 	}
 	
-	@GetMapping(path="/books/filter-by/{value}")
-	public MappingJacksonValue filterByValue(@PathVariable String value) {
-		List<Book> listOfBooks = bookJpaRepository.getAllBooks();
-		SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.filterOutAllExcept(value);
-		return genericfilter(listOfBooks, filter);
-	}
-	@GetMapping(path = "/books/available")
-	public MappingJacksonValue getAvailableBooks(){
-		List<Book> listOfBooks = bookJpaRepository.getAllBooks();
-		SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.filterOutAllExcept("bookName", "authorName", "genre");
-		return genericfilter(listOfBooks, filter);
-		
-	}
+//	@GetMapping(path = "/books/available")
+//	public MappingJacksonValue getAvailableBooks(){
+//		List<Book> listOfBooks = bookJpaRepository.getAllBooks();
+//		SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.filterOutAllExcept("bookName", "authorName", "genre");
+//		return genericfilter(listOfBooks, filter);
+//		
+//	}
 }

@@ -4,7 +4,6 @@ import java.util.UUID;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import com.fasterxml.jackson.annotation.JsonFilter;
 import com.school.restfulwebservice.student.Student;
 
 import jakarta.persistence.Entity;
@@ -15,29 +14,29 @@ import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.Size;
 
 @Entity
-@JsonFilter("filterByValue")
 public class Book {
-	
+
 	@Id
 	@GeneratedValue(generator = "uuid2")
 	@GenericGenerator(name = "uuid2", strategy = "uuid2")
 	private UUID id;
-	
-	@Size(min=3, message="Book name cannot be less than 3 characters")
+
+	@Size(min = 3, message = "Book name cannot be less than 3 characters")
 	private String bookName;
 
-	@Size(min=2, message="author name cannot be less than 3 characters")
+	@Size(min = 2, message = "author name cannot be less than 3 characters")
 	private String authorName;
-	
-	@Size(min=3, message="genre name cannot be less than 3 characters") 
-	private String genre; 
-	
+
+	@Size(min = 3, message = "genre name cannot be less than 3 characters")
+	private String genre;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Student student;
 
-	public Book() {}
-	
-	public Book(UUID id,  String bookName, String authorName, String genre, Student student) {
+	public Book() {
+	}
+
+	public Book(UUID id, String bookName, String authorName, String genre, Student student) {
 		super();
 		this.id = id;
 		this.bookName = bookName;
@@ -92,5 +91,4 @@ public class Book {
 				+ ", student=" + student + "]";
 	}
 
-	
 }
